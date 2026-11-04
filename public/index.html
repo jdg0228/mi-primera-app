@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto por correo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📷 Captura y envío de fotografía</h1>
+
+        <div class="camera-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="startCamera">
+                🎥 Activar cámara
+            </button>
+
+            <button id="takePhoto">
+                📸 Tomar foto
+            </button>
+
+            <button id="retakePhoto">
+                🔄 Repetir
+            </button>
+        </div>
+
+        <div class="preview">
+            <h2>Vista previa</h2>
+            <img id="photo" alt="Fotografía capturada">
+        </div>
+
+        <div class="email-form">
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Correo destinatario"
+                required
+            >
+
+            <button id="sendEmail">
+                📧 Enviar fotografía
+            </button>
+
+        </div>
+
+        <p id="message"></p>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
