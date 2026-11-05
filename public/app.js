@@ -91,44 +91,40 @@ retakePhoto.addEventListener("click", () => {
 sendEmail.addEventListener("click", async () => {
 
     if (!photoData) {
-
         message.textContent =
             "Primero debes tomar una fotografía.";
-
         return;
     }
 
-    if (!email.value) {
-
+    if (!email.value.trim()) {
         message.textContent =
             "Escribe el correo destinatario.";
-
         return;
     }
 
-    message.textContent =
-        "Enviando fotografía...";
+    message.textContent = "Enviando fotografía...";
+
+    sendEmail.disabled = true;
 
     try {
 
         const response = await fetch("/send-email", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify({
-                email: email.value,
+                email: email.value.trim(),
                 image: photoData
             })
-
         });
 
         const result = await response.json();
 
-        if (result.success) {
+        console.log("Respuesta del servidor:", result);
+        console.log("Estado HTTP:", response.status);
+
+        if (response.ok && result.success) {
 
             message.textContent =
                 "✅ Fotografía enviada correctamente.";
@@ -136,17 +132,23 @@ sendEmail.addEventListener("click", async () => {
         } else {
 
             message.textContent =
-                "❌ No se pudo enviar la fotografía.";
+                "❌ Error " + response.status + ": " +
+                (result.message || "No se pudo enviar la fotografía.");
 
         }
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Error de conexión:", error);
 
         message.textContent =
-            "❌ Error al comunicarse con el servidor.";
+            "❌ No se pudo establecer comunicación con el servidor.";
+
+    } finally {
+
+        sendEmail.disabled = false;
 
     }
 
 });
+
